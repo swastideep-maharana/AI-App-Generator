@@ -1,15 +1,16 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
-export interface GeneratedApp extends Document {
+export interface IGeneratedApp extends Document {
   userId: string;
   prompt: string;
   appType: string;
   framework: string;
   result: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
-const GeneratedAppSchema = new Schema<GeneratedApp>(
+const GeneratedAppSchema = new Schema<IGeneratedApp>(
   {
     userId: { type: String, required: true },
     prompt: { type: String, required: true },
@@ -20,5 +21,8 @@ const GeneratedAppSchema = new Schema<GeneratedApp>(
   { timestamps: true }
 );
 
-export default mongoose.models.GeneratedApp ||
-  mongoose.model("GeneratedApp", GeneratedAppSchema);
+const GeneratedApp: Model<IGeneratedApp> =
+  mongoose.models.GeneratedApp ||
+  mongoose.model<IGeneratedApp>("GeneratedApp", GeneratedAppSchema);
+
+export default GeneratedApp;
